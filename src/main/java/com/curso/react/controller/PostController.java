@@ -12,6 +12,9 @@ import com.curso.react.service.UserService;
 import com.curso.react.shared.PostCreationDto;
 import com.curso.react.shared.dto.PostDto;
 import com.curso.react.shared.dto.UserDto;
+import com.curso.react.util.Exposures;
+
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +42,7 @@ public class PostController {
   private UserService userService;
     
     @PostMapping()
-    public PostRest createPost(@RequestBody PostCreateRequestModel  createRequestModel){
+    public PostRest createPost(@RequestBody @Valid PostCreateRequestModel  createRequestModel){
       //Recuperamos el usuario que se encuentra en sesion
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       String mail = authentication.getPrincipal().toString();
@@ -81,7 +84,7 @@ public class PostController {
         postRest.setExpired(true);  //el post esta expirado  
       }
       //Comprobamos si el Post es privado (1 es privado,) o si el post expiro
-      if(postRest.getExposure().getId()==1 || postRest.getExpired()){
+      if(postRest.getExposure().getId()==Exposures.PRIVATE || postRest.getExpired()){
           //Recuperamos el authentication
           Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
           //recuperamos el email del usuario en sesion
@@ -112,7 +115,7 @@ public class PostController {
 
        //Recibe como parametro el Id del Post a eliminar
        @PutMapping("/{id}")
-       public PostRest updatePost(@RequestBody PostCreateRequestModel requestModel , @PathVariable String id){
+       public PostRest updatePost(@RequestBody @Valid PostCreateRequestModel requestModel , @PathVariable String id){
          //Recuperamos el Authentication a partir del contexto
          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
          //Recuperamos el usuario en sesion a partir de su correo

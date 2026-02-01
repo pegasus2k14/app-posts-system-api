@@ -1,9 +1,20 @@
 package com.curso.react.model.request;
 
+import org.hibernate.validator.constraints.Range;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class PostCreateRequestModel {
+    @NotEmpty(message = "El titulo es obligatorio")
     private String title;
+    @NotEmpty(message = "El contenido es obligatorio")
     private String content;
+    @NotNull(message = "La exposicion del post es obligatoria")
+    @Range(min = 1, max = 2, message = "La exposicion del post es invalida")
     private Long exposureId;
+    @NotNull(message = "El tiempo de expiracion del post es obligatorio")
+    @Range(min = 0, max = 1440, message = "El tiempo de expiración es invalido")
     private Integer expirationTime;
     
     public PostCreateRequestModel() {

@@ -21,6 +21,8 @@ import com.curso.react.service.UserService;
 import com.curso.react.shared.dto.PostDto;
 import com.curso.react.shared.dto.UserDto;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -50,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public UserRest createUser(@RequestBody UserDetailRequestModel userDetail) {
+    public UserRest createUser(@RequestBody @Valid UserDetailRequestModel userDetail) {
       UserRest userToResponse = new UserRest();
       UserDto userDto = new UserDto();
       //Copiamos las propiedades de userDetal en userDto

@@ -17,6 +17,7 @@ import com.curso.react.repository.PostRepository;
 import com.curso.react.repository.UserRepository;
 import com.curso.react.shared.PostCreationDto;
 import com.curso.react.shared.dto.PostDto;
+import com.curso.react.util.Exposures;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -51,9 +52,8 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<PostDto> getLastPosts() {
-       Long exposureId=2L;
        System.out.println(">> "+new Date(System.currentTimeMillis()));
-       List<PostEntity> postEntities = postRepository.getLastPublicPost(exposureId, new Date(System.currentTimeMillis()));
+       List<PostEntity> postEntities = postRepository.getLastPublicPost(Exposures.PUBLIC, new Date(System.currentTimeMillis()));
        List<PostDto> postDtos = new ArrayList<>();
        for (PostEntity postEntity : postEntities) {
         PostDto postDto = mapper.map(postEntity, PostDto.class);
